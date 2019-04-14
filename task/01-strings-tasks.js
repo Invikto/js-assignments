@@ -22,7 +22,7 @@
  *   '',  'bb'  => 'bb'
  */
 function concatenateStrings(value1, value2) {
-    throw new Error('Not implemented');
+  return value1.concat(value2);
 }
 
 
@@ -38,7 +38,7 @@ function concatenateStrings(value1, value2) {
  *   ''      => 0
  */
 function getStringLength(value) {
-    throw new Error('Not implemented');
+  return value.length;
 }
 
 /**
@@ -55,7 +55,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-    throw new Error('Not implemented');
+  return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -69,7 +69,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    throw new Error('Not implemented');
+  return value.substring(7, value.length - 1);
 }
 
 
@@ -84,7 +84,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-    throw new Error('Not implemented');
+  return value[0];
 }
 
 /**
@@ -99,7 +99,7 @@ function getFirstChar(value) {
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
-    throw new Error('Not implemented');
+  return value.trim();
 }
 
 /**
@@ -114,7 +114,8 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-    throw new Error('Not implemented');
+  return count == 1 ?
+    value : repeatString(value, count - 1).concat(value);
 }
 
 /**
@@ -130,7 +131,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    throw new Error('Not implemented');
+  return str.replace(value, '');
 }
 
 /**
@@ -145,7 +146,7 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-    throw new Error('Not implemented');
+  return str.substring(1, str.length - 1);
 }
 
 
@@ -160,7 +161,7 @@ function unbracketTag(str) {
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
 function convertToUpperCase(str) {
-    throw new Error('Not implemented');
+  return str.toUpperCase();
 }
 
 /**
@@ -174,7 +175,7 @@ function convertToUpperCase(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-    throw new Error('Not implemented');
+  return str.split(';');
 }
 
 /**
@@ -201,7 +202,53 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
+  let result = '';
+  let item = '';
+
+  for (let i = 1; i <= height; i++) {
+    for (let j = 1; j <= width; j++) {
+      switch (true) {
+        case i == 1 && j == 1:
+          item = '┌';
+          break;
+
+        case i == 1 && j == width:
+          item = '┐\n';
+          break;
+
+        case i == height && j == 1:
+          item = '└';
+          break;
+
+        case i == height && j == width:
+          item = '┘\n';
+          break;
+
+        case i == 1:
+          item = '─';
+          break;
+
+        case i == height:
+          item = '─';
+          break;
+
+        case j == 1:
+          item = '│';
+          break;
+
+        case j == width:
+          item = '│\n';
+          break;
+
+        default:
+          item = ' ';
+      }
+
+      result += item;
+    }
+  }
+
+  return result;
 }
 
 
@@ -221,7 +268,19 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+  let result = '';
+  let charCode = 0;
+
+  for (let i = 0, n = str.length; i < n; i++) {
+    charCode = str.charCodeAt(i);
+    (charCode >= 65 && charCode < 78) || (charCode >= 97 && charCode < 110) ?
+    charCode += 13: (charCode >= 78 && charCode < 91) || (charCode >= 110 && charCode < 123) ?
+      charCode -= 13 : charCode;
+
+    result += String.fromCharCode(charCode);
+  }
+
+  return result;
 }
 
 /**
@@ -238,7 +297,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+  return typeof value == 'string' || value instanceof String;
 }
 
 
@@ -267,24 +326,62 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
+  let result = null;
+
+  switch (value[0]) {
+    case 'A':
+      result = 0;
+      break;
+
+    case 'J':
+      result = 10;
+      break;
+
+    case 'Q':
+      result = 11;
+      break;
+
+    case 'K':
+      result = 12;
+      break;
+      
+    default:
+      result = value.substring(0, value.length - 1) - 1;
+  }
+
+  switch (value[value.length - 1]) {
+      
+    case '♦':
+      result += 13;
+      break;
+
+    case '♥':
+      result += 26;
+      break;
+
+    case '♠':
+      result += 39;
+      break; 
+  }
+
+  return result;
 }
 
 
 module.exports = {
-    concatenateStrings: concatenateStrings,
-    getStringLength: getStringLength,
-    getStringFromTemplate: getStringFromTemplate,
-    extractNameFromTemplate: extractNameFromTemplate,
-    getFirstChar: getFirstChar,
-    removeLeadingAndTrailingWhitespaces: removeLeadingAndTrailingWhitespaces,
-    repeatString: repeatString,
-    removeFirstOccurrences: removeFirstOccurrences,
-    unbracketTag: unbracketTag,
-    convertToUpperCase: convertToUpperCase,
-    extractEmails: extractEmails,
-    getRectangleString: getRectangleString,
-    encodeToRot13: encodeToRot13,
-    isString: isString,
-    getCardId: getCardId
+  concatenateStrings: concatenateStrings,
+  getStringLength: getStringLength,
+  getStringFromTemplate: getStringFromTemplate,
+  extractNameFromTemplate: extractNameFromTemplate,
+  getFirstChar: getFirstChar,
+  removeLeadingAndTrailingWhitespaces: removeLeadingAndTrailingWhitespaces,
+  repeatString: repeatString,
+  removeFirstOccurrences: removeFirstOccurrences,
+  unbracketTag: unbracketTag,
+  convertToUpperCase: convertToUpperCase,
+  extractEmails: extractEmails,
+  getRectangleString: getRectangleString,
+  encodeToRot13: encodeToRot13,
+  isString: isString,
+  getCardId: getCardId
 };
